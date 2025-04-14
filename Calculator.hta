@@ -1,0 +1,132 @@
+<html>
+<head>
+<title>Calculator</title>
+<HTA:APPLICATION
+  APPLICATIONNAME="Calculator"
+  ID="Calc"
+  VERSION="1.0"
+  SCROLL="no"
+  MAXIMIZEBUTTON="no"
+  SHOWINTASKBAR="no"/>
+</head>
+
+<style>
+
+.btn{font-family: Arial;
+  font-size: 12;
+  color: #000000;
+  background-color: #FFFFFF;
+  width: 40;
+  height: 25;}
+
+
+.eq {font-family: Arial;
+  font-size: 12;
+  color: #000000;
+  background-color: #FFFFFF;
+  width: 40;
+  height: 85;}
+
+
+.0 {font-family: Arial;
+  font-size: 12;
+  color: #000000;
+  background-color: #FFFFFF;
+  width: 85;
+  height: 25;}
+
+</style>
+
+<script language="VBScript">
+
+Sub Window_OnLoad
+   Dim width,height
+   width=270
+   height=300
+   self.ResizeTo width,height
+   box.focus
+End Sub
+
+Function btnb
+On Error Resume Next
+count = 0
+text = box.value
+count = Len(box.value)
+count = count-1
+box.value = Left(box.value, count)
+End Function
+
+Function eq
+On Error Resume Next
+junk = Eval(box.value)
+If (Err.Number <> 0) Then
+box.value = Err.Description
+Else
+box.value = Eval(box.value)
+End If
+End Function
+
+Function AddBox(ID)
+box.value = box.value&ID
+End Function
+
+Function KPS
+If (window.event.keycode = 99) Then
+box.value = ""
+Else If (window.event.keycode = 13) Then
+eq()
+Else If (window.event.keycode = 8) Then
+btnb()
+Else If ((window.event.keycode <> 94) And (window.event.keycode < 40 Or window.event.keycode > 41) And (window.event.keycode < 42 Or window.event.keycode > 57)) Then
+window.event.returnvalue = False
+Else
+cxz.focus
+box.value = box.value & Chr(window.event.keycode)
+End If
+End If
+End If
+End If
+End Function
+
+</script>
+
+<body bgcolor="white" onkeypress="KPS">
+<table align="center" id="cxz">
+<caption><hr><b>CALCULATOR</b><hr></caption>
+<tr>
+<td colspan="5" align="center"><input type="text" id="box" size="30" onclick="cxz.focus" readonly>
+</tr>
+<tr>
+<td colspan="2"><input type="button" value="Backspace" class="0" id="btna" onclick="btnb" onmouseover="btna.style.background = '#808080'" onmouseout="btna.style.background = '#FFFFFF'"></td>
+<td><input type="button" value="(" class="btn" id="btnz" onclick="AddBox('(')" onmouseover="btnz.style.background = '#808080'" onmouseout="btnz.style.background = '#FFFFFF'"></td>
+<td><input type="button" value=")" class="btn" id="btnc" onclick="AddBox(')')" onmouseover="btnc.style.background = '#808080'" onmouseout="btnc.style.background = '#FFFFFF'"></td>
+<td><input type="button" value="C" class="btn" id="btnd" onclick="box.value = ''" onmouseover="btnd.style.background = '#808080'" onmouseout="btnd.style.background = '#FFFFFF'"></td>
+</tr>
+<tr>
+<td><input type="button" value="7" class="btn" id="btne" onclick="AddBox('7')" onmouseover="btne.style.background = '#808080'" onmouseout="btne.style.background = '#FFFFFF'"></td>
+<td><input type="button" value="8" class="btn" id="btnf" onclick="AddBox('8')" onmouseover="btnf.style.background = '#808080'" onmouseout="btnf.style.background = '#FFFFFF'"></td>
+<td><input type="button" value="9" class="btn" id="btng" onclick="AddBox('9')" onmouseover="btng.style.background = '#808080'" onmouseout="btng.style.background = '#FFFFFF'"></td>
+<td><input type="button" value="/" class="btn" id="btnh" onclick="AddBox('/')" onmouseover="btnh.style.background = '#808080'" onmouseout="btnh.style.background = '#FFFFFF'"></td>
+<td><input type="button" value="^" class="btn" id="btni" onclick="AddBox('^')" onmouseover="btni.style.background = '#808080'" onmouseout="btni.style.background = '#FFFFFF'"></td>
+</tr>
+<tr>
+<td><input type="button" value="4" class="btn" id="btnj" onclick="AddBox('4')" onmouseover="btnj.style.background = '#808080'" onmouseout="btnj.style.background = '#FFFFFF'"></td>
+<td><input type="button" value="5" class="btn" id="btnk" onclick="AddBox('5')" onmouseover="btnk.style.background = '#808080'" onmouseout="btnk.style.background = '#FFFFFF'"></td>
+<td><input type="button" value="6" class="btn" id="btnl" onclick="AddBox('6')" onmouseover="btnl.style.background = '#808080'" onmouseout="btnl.style.background = '#FFFFFF'"></td>
+<td><input type="button" value="*" class="btn" id="btnm" onclick="AddBox('*')" onmouseover="btnm.style.background = '#808080'" onmouseout="btnm.style.background = '#FFFFFF'"></td>
+<td rowspan="3"><input type="button" value="=" class="eq" id="btnn" onclick="eq" onmouseover="btnn.style.background = '#808080'" onmouseout="btnn.style.background = '#FFFFFF'"></td>
+</tr>
+<tr>
+<td><input type="button" value="1" class="btn" id="btno" onclick="AddBox('1')" onmouseover="btno.style.background = '#808080'" onmouseout="btno.style.background = '#FFFFFF'"></td>
+<td><input type="button" value="2" class="btn" id="btnp" onclick="AddBox('2')" onmouseover="btnp.style.background = '#808080'" onmouseout="btnp.style.background = '#FFFFFF'"></td>
+<td><input type="button" value="3" class="btn" id="btnq" onclick="AddBox('3')" onmouseover="btnq.style.background = '#808080'" onmouseout="btnq.style.background = '#FFFFFF'"></td>
+<td><input type="button" value="-" class="btn" id="btnr" onclick="AddBox('-')" onmouseover="btnr.style.background = '#808080'" onmouseout="btnr.style.background = '#FFFFFF'"></td>
+</tr>
+<tr>
+<td colspan="2"><input type="button" value="0" class="0" id="btns" onclick="AddBox('0')" onmouseover="btns.style.background = '#808080'" onmouseout="btns.style.background = '#FFFFFF'"></td>
+<td><input type="button" value="." class="btn" id="btnt" onclick="AddBox('.')" onmouseover="btnt.style.background = '#808080'" onmouseout="btnt.style.background = '#FFFFFF'"></td>
+<td><input type="button" value="+" class="btn" id="btnu" onclick="AddBox('+')" onmouseover="btnu.style.background = '#808080'" onmouseout="btnu.style.background = '#FFFFFF'"></td>
+</tr>
+</table>
+</body>
+</html>
