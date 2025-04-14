@@ -1,0 +1,142 @@
+<html>
+<head>
+<HTA:APPLICATION ID="matrix" APPLICATIONNAME="matrixhta"
+WINDOWSTATE="maximize"
+BORDER="none"
+SCROLL="no">
+<title>Matrix 0.1</title>
+<style type="text/css">
+body{background-color:black; color:DarkSlateGray; font-size:20px;}
+div{width:20px; float:left;}
+</style>
+<script language="vbscript">
+
+Public n, iTimerID, MyTitle, colnum, carset
+ReDim M(1,1)
+ReDim SpecCar(64)
+SpecCar(0)="&permil;" 
+SpecCar(1)="&fnof;"   : SpecCar(11)="&Omega;"   : SpecCar(21)="&lambda;" : SpecCar(31)="&phi;"
+SpecCar(2)="&Gamma;"  : SpecCar(12)="&alpha;"   : SpecCar(22)="&mu;"     : SpecCar(32)="&psi;"
+SpecCar(3)="&Delta;"  : SpecCar(13)="&beta;"    : SpecCar(23)="&nu;"     : SpecCar(33)="&omega;"
+SpecCar(4)="&Theta;"  : SpecCar(14)="&delta;"   : SpecCar(24)="&xi;"     : SpecCar(34)="&trade;"
+SpecCar(5)="&Lambda;" : SpecCar(15)="&epsilon;" : SpecCar(25)="&pi;"     : SpecCar(35)="&larr;"
+SpecCar(6)="&Xi;"     : SpecCar(16)="&zeta;"    : SpecCar(26)="&rho;"    : SpecCar(36)="&uarr;"
+SpecCar(7)="&Pi;"     : SpecCar(17)="&eta;"     : SpecCar(27)="&sigmaf;" : SpecCar(37)="&rarr;"
+SpecCar(8)="&Sigma;"  : SpecCar(19)="&iota;"    : SpecCar(29)="&tau;"    : SpecCar(39)="&harr;"
+SpecCar(10)="&Psi;"   : SpecCar(20)="&kappa;"   : SpecCar(30)="&upsilon;": SpecCar(40)="&radic;"
+SpecCar(41)="&infin;" : SpecCar(46)="&there4;"  : SpecCar(51)="&ge;"     : SpecCar(56)="&clubs;"
+SpecCar(42)="&ang;"   : SpecCar(47)="&asymp;"   : SpecCar(52)="&oplus;"  : SpecCar(57)="&hearts;"
+SpecCar(43)="&cap;"   : SpecCar(48)="&ne;"      : SpecCar(53)="&perp;"   : SpecCar(58)="&diams;"
+SpecCar(44)="&cup;"   : SpecCar(49)="&equiv;"   : SpecCar(54)="&loz;"    : SpecCar(59)="&OElig;"
+SpecCar(45)="&int;"   : SpecCar(50)="&le;"      : SpecCar(55)="&spades;" : SpecCar(60)="&dagger;"
+SpecCar(61)="&Dagger;": SpecCar(62)="&euro;"    : SpecCar(63)="&oelig;"  : SpecCar(64)="&Scaron;"
+
+Sub window_onLoad()
+n=32
+colnum=48
+carset=1
+ReDim M(colnum,1)
+'--- Set a random number for the first character to be written on the screen for each collumn (div) ---
+'--- This is useful to avoid all the collumn to start at the same place -----
+    For i=1 To colnum
+    Randomize   '---This formula doesn't accept variables
+    M(i,0) = Int(31*Rnd)  '--- M(i,0) contains the number of the character to be written
+    t=""
+    '--- Fill the collumn with white space ---
+	  For j=1 To n
+	  t = t & "&nbsp;<br>"
+	  Next
+    M(i,1) = t  '--- M(i,1) contains the html of the column
+    Next
+iTimerID = window.setInterval("Progress", 500)
+End Sub
+
+Sub Progress
+    For i=1 To colnum
+    l = Split(M(i,1), "<br>") '--- split by each character in the collumn
+    cpos = M(i,0)  '--- position of the character to be written on the screen at this time
+    '--- write a random ascii or a character from the array ---
+    Randomize
+	  If Int(carset)=1 Then
+	  l(cpos) = "<span style=""color:GreenYellow"">" & Chr( 32 + Int(223*Rnd) ) & "</span>"
+	  carset = carset +0.25
+	  ElseIf Int(carset)=2 Then
+	  l(cpos) = "<span style=""color:GreenYellow"">" & SpecCar( Int(64*Rnd) )  & "</span>"
+	  carset = 1
+	  End If
+    '--- scale down to dark the previous characters ---
+    y=-1
+	  For j = cpos-1 To cpos-11 Step -1
+	  tempj = j
+		If j < 0 Then  '--- when we start from the top, darken characters at the bottom
+		j = UBound(l) +j +1
+		End If
+	  y=y+1
+		    Select Case y
+		    Case 0 color="LawnGreen"
+		    Case 1 color="LawnGreen"
+		    Case 2 color="LimeGreen"
+		    Case 3 color="LimeGreen"
+		    Case 4 color="ForestGreen"
+		    Case 5 color="ForestGreen"
+		    Case 6 color="Green"
+		    Case 7 color="Green"
+		    Case 8 color="DarkGreen"
+		    Case 9 color="DarkGreen"
+		    Case 10 color=""
+		    End Select
+	  clj = l(j)
+		If InStr(1, clj, "<span", 1)>0 Then   '--- isolate the character from the span tag
+		clj = Left(clj, InStrRev(clj, "<") -1)
+		clj = Mid(clj, InStr(clj, ">") +1)
+		End If
+		If color <> "" Then  '--- set a span with a color style only if necessary
+		l(j) = "<span style=""color:" & color & """>" & clj & "</span>"
+		Else
+		l(j) = clj
+		End If
+	  j = tempj
+	  Next
+    t = Join(l, "<br>")
+    M(i,1) = t  '--- M(i,1) contains the html of the column
+    cpos = cpos +1
+	  If cpos > UBound(l) Then
+	  cpos = 0
+	  End If
+    M(i,0) = cpos   '--- M(i,0) contains the number of the character to be written
+    id("col" & i).innerHTML = t  '--- Show the result for this the collumn on the screen
+    Next
+End Sub
+
+Sub checkKey
+    Select Case window.event.keycode
+    Case 27  Call ExitMatrix	'---escape: Quit the program
+    End Select
+End Sub
+
+Sub ExitMatrix
+window.clearInterval(iTimerID)  '---You must always clear the intervals before leaving
+window.close
+End Sub
+
+Function id(o)
+Set id = document.getElementById(o)
+End Function
+
+</script>
+</head>
+<body onKeyDown="checkKey">
+<div id="col1"></div><div id="col12"></div><div id="col23"></div><div id="col34"></div>
+<div id="col2"></div><div id="col13"></div><div id="col24"></div><div id="col35"></div>
+<div id="col3"></div><div id="col14"></div><div id="col25"></div><div id="col36"></div>
+<div id="col4"></div><div id="col15"></div><div id="col26"></div><div id="col37"></div>
+<div id="col5"></div><div id="col16"></div><div id="col27"></div><div id="col38"></div>
+<div id="col6"></div><div id="col17"></div><div id="col28"></div><div id="col39"></div>
+<div id="col7"></div><div id="col18"></div><div id="col29"></div><div id="col40"></div>
+<div id="col8"></div><div id="col19"></div><div id="col30"></div><div id="col41"></div>
+<div id="col9"></div><div id="col20"></div><div id="col31"></div><div id="col42"></div>
+<div id="col10"></div><div id="col21"></div><div id="col32"></div><div id="col43"></div>
+<div id="col11"></div><div id="col22"></div><div id="col33"></div><div id="col44"></div>
+<div id="col45"></div><div id="col46"></div><div id="col47"></div><div id="col48"></div>
+</body>
+</html>
