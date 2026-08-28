@@ -1,6 +1,10 @@
+Actualizar c++
+
+https://github.com/theshoqanebi/cxxdroid-libraries-free
+
 Instalar Red Panda Dev-C++
 
-cmd or powershell:
+CMD or POWERSHELL:
 
  winget install -e --id RoyQu.Red-C++
  
@@ -10,94 +14,20 @@ cmd or powershell:
 
 
 Pandaroyqh1979@gmail.com
-
-CMD windows (vcpkg)
-
-Abrir CMD usando vcpkg
-
-Actualiza la lista vcpkg update
-
-Actualiza el gestor vcpkg upgrade --no-dry-run
-
-SFML vcpkg install sfml:x64-windows
-
-ALLEGRO5 vcpkg install allegro5:x64-windows
-
 =================================
-Terminal cxx
+
+Cxxdroid IDE:
 
 https://github.com/theshoqanebi/cxxdroid-libraries-free.git
 
 wget https://raw.githubusercontent.com/theshoqanebi/cxxdroid-libraries-free/main/allegro.sh -O - | sh
 
 wget https://raw.githubusercontent.com/theshoqanebi/cxxdroid-libraries-free/main/sfml.sh -O - | sh
-==================================
-Termux
 
-Actualizar sistema: 
+===============≠=========≠===≠=====
 
-pkg update
-pkg upgrade
+CxStudio IDE:
 
-Instala o compila el compilador CLANG (lenguaje C):
+curl update && curl upgrade
 
-pkg install clang
-
-Instala un editor NANO:
-
-pkg install nano
-
-Actualizar C++:
-
-pkg update && pkg upgrade -y
-pkg install clang build-essential -y
-
-Actualizar editor:
-
-pkg install nano -y
-nano programa.cpp
-
-Compilador C++:
-
-g++ programa.cpp -o programa
-
-ALLEGRO:
-
-pkg update && pkg upgrade -y
-pkg install clang cmake make git wget tar -y
-
-Codigo fuente:
-
-wget https://github.com
-tar -xvzf allegro-5.2.10.tar.gz
-cd allegro-5.2.10
-
-Configuracion y compila:
-
-mkdir build
-cd build
-cmake .. -DCMAKE_INSTALL_PREFIX=$PREFIX
-make
-make install
-
-Compilador:
-
-clang++ -o programa_juego tu_codigo.cpp -I$PREFIX/include -L$PREFIX/lib -lallegro -lallegro_main
-
-SFML:
-
-pkg update && pkg upgrade -y
-
-Instalar herramientas:
-
-pkg install clang make -y
-
-Instalar graficos SFML:
-
-pkg install x11-repo -y
-pkg install libx11 libxrandr libudev freetype libjpeg libsndfile openal -y
-
-Compilador:
-
-clang++ -o programa mi_archivo.cpp -lsfml-graphics -lsfml-window -lsfml-system
-===================================
+curl -LO
